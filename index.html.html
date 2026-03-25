@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kerma AI — Carbon Footprint Calculator | CarbonKerma</title>
+<meta name="description" content="Calculate your carbon footprint and offset with CCUS-backed, EPA-verified CarbonKerma Tokens. No greenwashing. Real, permanent carbon capture.">
+<meta property="og:title" content="Kerma AI — Know Your Carbon. Offset It For Real.">
+<meta property="og:description" content="Free carbon calculator + CCUS-backed offset credits. EPA-verified. Blockchain recorded. No greenwashing.">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Kerma AI — Carbon Footprint Calculator">
+<meta name="twitter:description" content="Calculate & offset your emissions with verified, permanent CarbonKerma Tokens.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0f0d;
+  --card: #111916;
+  --border: #1e2e25;
+  --accent: #22c55e;
+  --accent-dim: #16a34a;
+  --accent-glow: rgba(34,197,94,0.15);
+  --text: #e8ede9;
+  --text-muted: #8a9b8f;
+  --text-dim: #5a6b5f;
+  --cfc: #0ea5e9;
+  --cfc-glow: rgba(14,165,233,0.15);
+  --mono: 'JetBrains Mono', 'SF Mono', monospace;
+  --sans: 'DM Sans', system-ui, sans-serif;
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+::selection { background: rgba(34,197,94,0.3); }
+html { scroll-behavior: smooth; }
+body { font-family: var(--sans); background: var(--bg); color: var(--text); line-height: 1.6; min-height: 100vh; }
+a { color: var(--accent); text-decoration: none; }
+input, select, button { font-family: var(--sans); }
+input:focus, select:focus { border-color: var(--accent) !important; outline: none; }
+
+/* NAV */
+.nav { position: sticky; top: 0; z-index: 100; background: rgba(10,15,13,0.85); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
+.nav-inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 64px; padding: 0 24px; }
+.nav-logo { display: flex; align-items: center; gap: 10px; cursor: pointer; }
+.nav-logo-icon { width: 32px; height: 32px; border-radius: 8px; background: linear-gradient(135deg, var(--accent), var(--accent-dim)); display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 900; color: var(--bg); }
+.nav-logo-text { font-size: 18px; font-weight: 700; letter-spacing: -0.02em; }
+.nav-badge { font-size: 10px; font-weight: 700; color: var(--accent); background: var(--accent-glow); padding: 2px 8px; border-radius: 20px; letter-spacing: 0.06em; text-transform: uppercase; }
+.nav-btns { display: flex; gap: 8px; align-items: center; }
+
+/* BUTTONS */
+.btn-primary { background: var(--accent); color: var(--bg); border: none; border-radius: 8px; padding: 14px 32px; font-size: 15px; font-weight: 700; cursor: pointer; letter-spacing: 0.02em; transition: all 0.2s; }
+.btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
+.btn-primary-sm { padding: 8px 20px; font-size: 13px; }
+.btn-outline { background: transparent; color: var(--accent); border: 1.5px solid var(--accent); border-radius: 8px; padding: 13px 30px; font-size: 15px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+.btn-outline:hover { background: var(--accent-glow); transform: translateY(-1px); }
+.btn-outline-sm { padding: 8px 20px; font-size: 13px; }
+.btn-cfc { border-color: var(--cfc); color: var(--cfc); }
+.btn-cfc:hover { background: var(--cfc-glow); }
+.btn-full { width: 100%; }
+
+/* LAYOUT */
+.container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+.container-sm { max-width: 720px; margin: 0 auto; padding: 0 24px; }
+.container-md { max-width: 800px; margin: 0 auto; padding: 0 24px; }
+.section { padding: 60px 24px 80px; }
+.text-center { text-align: center; }
+
+/* CARDS */
+.card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 32px; }
+
+/* FORMS */
+.input { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 12px 16px; color: var(--text); font-size: 14px; width: 100%; outline: none; }
+.select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%238a9b8f' d='M6 8L1 3h10z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; padding-right: 36px; }
+.label { font-size: 12px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; display: block; }
+.tag { font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+.tag-accent { color: var(--accent); }
+.tag-cfc { color: var(--cfc); }
+
+/* GRID */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+.grid-row { display: grid; gap: 20px; }
+
+/* HERO */
+.hero { padding: 100px 24px 80px; text-align: center; position: relative; overflow: hidden; }
+.hero-glow { position: absolute; top: -200px; left: 50%; transform: translateX(-50%); width: 800px; height: 800px; border-radius: 50%; background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%); pointer-events: none; }
+.hero h1 { font-size: clamp(36px, 5vw, 64px); font-weight: 800; line-height: 1.08; letter-spacing: -0.03em; max-width: 800px; margin: 0 auto 24px; }
+.hero h1 span { color: var(--accent); }
+.hero p { font-size: 18px; color: var(--text-muted); max-width: 600px; margin: 0 auto 40px; line-height: 1.7; }
+.hero p strong { color: var(--text); }
+.hero-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.launch-badge { display: inline-block; font-size: 12px; font-weight: 700; color: var(--accent); background: var(--accent-glow); padding: 6px 16px; border-radius: 20px; margin-bottom: 24px; letter-spacing: 0.06em; text-transform: uppercase; }
+
+/* TRUST BAR */
+.trust-bar { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 20px 24px; }
+.trust-bar-inner { display: flex; justify-content: center; gap: 48px; flex-wrap: wrap; }
+.trust-bar span { font-size: 12px; font-weight: 600; color: var(--text-dim); letter-spacing: 0.06em; text-transform: uppercase; }
+
+/* WAITLIST */
+.waitlist { max-width: 480px; margin: 48px auto 0; }
+.waitlist-row { display: flex; gap: 8px; }
+.waitlist-success { padding: 20px; text-align: center; border: 1px solid var(--accent); background: var(--accent-glow); border-radius: 16px; }
+
+/* TABS */
+.tabs { display: flex; gap: 8px; justify-content: center; margin-bottom: 32px; }
+.tab { padding: 10px 24px; border-radius: 8px; border: none; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+.tab-active { background: var(--accent); color: var(--bg); }
+.tab-inactive { background: var(--card); color: var(--text-muted); }
+.tab:hover { opacity: 0.9; }
+
+/* RESULTS */
+.result-big { text-align: center; background: linear-gradient(135deg, var(--card) 0%, var(--accent-glow) 100%); border: 1px solid var(--accent); }
+.result-big .number { font-size: 56px; font-weight: 800; letter-spacing: -0.03em; color: #fff; }
+.result-big .unit { font-size: 18px; font-weight: 600; color: var(--accent); }
+.breakdown-row { display: flex; justify-content: space-between; padding: 10px 0; }
+.breakdown-row:not(:last-child) { border-bottom: 1px solid var(--border); }
+.breakdown-label { color: var(--text-muted); font-size: 14px; }
+.breakdown-value { font-weight: 600; font-size: 14px; font-family: var(--mono); }
+.offset-cta { border: 1px solid var(--accent); background: var(--accent-glow); }
+.offset-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
+.offset-price { font-size: 28px; font-weight: 800; color: #fff; }
+.offset-detail { font-size: 13px; color: var(--text-muted); margin-top: 4px; }
+
+/* PRICING */
+.price-card { position: relative; overflow: hidden; }
+.price-popular { position: absolute; top: 16px; right: -28px; background: var(--accent); color: var(--bg); font-size: 10px; font-weight: 800; padding: 4px 32px; transform: rotate(45deg); letter-spacing: 0.06em; }
+.price-amount { font-size: 36px; font-weight: 800; }
+.price-period { font-size: 14px; color: var(--text-muted); }
+.feature-row { font-size: 14px; color: var(--text-muted); padding: 6px 0; display: flex; gap: 8px; }
+.feature-check { color: var(--accent); }
+.feature-check-cfc { color: var(--cfc); }
+
+/* CFC */
+.cfc-card { border: 1px solid rgba(14,165,233,0.3); }
+.cfc-bg { background: linear-gradient(135deg, var(--card), rgba(14,165,233,0.05)); }
+.milestone-row { display: grid; grid-template-columns: 48px 1fr 1fr; gap: 16px; align-items: center; padding: 14px 0; }
+.milestone-row:not(:last-child) { border-bottom: 1px solid var(--border); }
+.milestone-num { width: 36px; height: 36px; border-radius: 50%; background: var(--cfc-glow); border: 1.5px solid var(--cfc); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; color: var(--cfc); }
+.milestone-name { font-weight: 700; font-size: 14px; }
+.milestone-desc { font-size: 13px; color: var(--text-muted); }
+.milestone-trigger { font-size: 13px; color: var(--cfc); font-weight: 600; text-align: right; font-family: var(--mono); }
+
+/* FOOTER */
+.footer { border-top: 1px solid var(--border); padding: 32px 24px; text-align: center; }
+.footer p { font-size: 13px; color: var(--text-dim); }
+.footer .sub { font-size: 12px; margin-top: 4px; }
+
+/* HIDDEN */
+.hidden { display: none !important; }
+
+/* RESPONSIVE */
+@media (max-width: 640px) {
+  .grid-2 { grid-template-columns: 1fr; }
+  .grid-3col { grid-template-columns: 1fr !important; }
+  .milestone-row { grid-template-columns: 36px 1fr; }
+  .milestone-trigger { text-align: left; grid-column: 2; }
+  .nav-btns .btn-outline { display: none; }
+  .offset-inner { flex-direction: column; align-items: flex-start; }
+  .trust-bar-inner { gap: 20px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="nav-logo" onclick="showSection('landing')">
+      <div class="nav-logo-icon">K</div>
+      <span class="nav-logo-text">Kerma AI</span>
+      <span class="nav-badge">by CarbonKerma</span>
+    </div>
+    <div class="nav-btns">
+      <button class="btn-outline btn-outline-sm" onclick="showSection('calculator')">Calculate Now</button>
+      <button class="btn-primary btn-primary-sm" onclick="showSection('pricing')">Get Pro</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══════════ LANDING ═══════════ -->
+<div id="sec-landing">
+  <section class="hero">
+    <div class="hero-glow"></div>
+    <div class="container" style="position:relative">
+      <div class="launch-badge">Launching Q2 2026 — Join the Waitlist</div>
+      <h1>Know Your Carbon.<br><span>Offset It For Real.</span></h1>
+      <p>Kerma AI calculates your emissions with precision — then connects you to CCUS-backed carbon credits that are <strong>measured, verified, and permanent</strong>. No greenwashing. No tree-planting promises. EPA-protocol backed permanence.</p>
+      <div class="hero-btns">
+        <button class="btn-primary" onclick="showSection('calculator')">Calculate Your Footprint — Free</button>
+        <button class="btn-outline" onclick="showSection('cfc')">Enterprise CFC Program →</button>
+      </div>
+      <div class="waitlist" id="waitlist-hero">
+        <div class="waitlist-row">
+          <input type="email" id="email-hero" class="input" placeholder="Enter your email for Pro early access" style="flex:1">
+          <button class="btn-primary" onclick="joinWaitlist('hero')" style="white-space:nowrap">Join Waitlist</button>
+        </div>
+      </div>
+      <div class="waitlist hidden" id="waitlist-hero-success">
+        <div class="waitlist-success">
+          <span style="font-size:20px;margin-right:8px">✓</span>
+          <span style="font-weight:600">You're on the Pro waitlist. We'll be in touch.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Trust Bar -->
+  <section class="trust-bar">
+    <div class="trust-bar-inner">
+      <span>Blockchain Verified</span>
+      <span>EPA MRV Protocol</span>
+      <span>CCUS-Backed Credits</span>
+      <span>Patent Pending UCT</span>
+      <span>Zero Double Counting</span>
+    </div>
+  </section>
+
+  <!-- How It Works -->
+  <section class="section">
+    <div class="container">
+      <h2 style="font-size:32px;font-weight:700;text-align:center;margin-bottom:12px;letter-spacing:-0.02em">Three Steps to Verified Carbon Neutrality</h2>
+      <p style="text-align:center;color:var(--text-muted);margin-bottom:56px;font-size:16px">From calculation to permanent, auditable offset in minutes</p>
+      <div class="grid-3">
+        <div class="card">
+          <div style="font-size:48px;margin-bottom:16px">📊</div>
+          <div class="tag tag-accent" style="margin-bottom:8px">STEP 01</div>
+          <h3 style="font-size:20px;font-weight:700;margin-bottom:8px">Calculate</h3>
+          <p style="font-size:14px;color:var(--text-muted);line-height:1.7">Input your flight, event, or business data. Our engine maps emissions across Scope 1, 2 &amp; 3 with industry-standard factors.</p>
+        </div>
+        <div class="card">
+          <div style="font-size:48px;margin-bottom:16px">🔗</div>
+          <div class="tag tag-accent" style="margin-bottom:8px">STEP 02</div>
+          <h3 style="font-size:20px;font-weight:700;margin-bottom:8px">Offset with CKT</h3>
+          <p style="font-size:14px;color:var(--text-muted);line-height:1.7">Purchase CarbonKerma Tokens — each backed by verified CCUS tonnage with EPA-approved MRV and immutable blockchain provenance.</p>
+        </div>
+        <div class="card">
+          <div style="font-size:48px;margin-bottom:16px">✓</div>
+          <div class="tag tag-accent" style="margin-bottom:8px">STEP 03</div>
+          <h3 style="font-size:20px;font-weight:700;margin-bottom:8px">Prove It</h3>
+          <p style="font-size:14px;color:var(--text-muted);line-height:1.7">Receive an auditable certificate. Every transaction is permanently recorded on-chain. No double counting. No greenwashing. Ever.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CFC Teaser -->
+  <section class="section" style="padding-top:0">
+    <div class="container">
+      <div class="card cfc-card cfc-bg" style="display:grid;grid-template-columns:1fr auto;gap:40px;align-items:center">
+        <div>
+          <div class="tag tag-cfc" style="margin-bottom:12px">Enterprise Program</div>
+          <h2 style="font-size:28px;font-weight:700;margin-bottom:12px;letter-spacing:-0.02em">Carbon Forward Commitment (CFC)</h2>
+          <p style="font-size:15px;color:var(--text-muted);line-height:1.7;margin-bottom:16px">For the Big Four, BCG, and enterprises serious about walking the talk. Forward-purchase CKT credits tied to CCUS project milestones — and <strong style="color:var(--text)">directly finance new carbon capture infrastructure</strong>.</p>
+          <p style="font-size:14px;color:var(--text-dim)">Don't just offset. Build the capture capacity the world needs.</p>
+        </div>
+        <button class="btn-outline btn-cfc" onclick="showSection('cfc')" style="white-space:nowrap">Learn About CFC →</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ═══════════ CALCULATOR ═══════════ -->
+<div id="sec-calculator" class="hidden">
+  <section class="section">
+    <div class="container-sm">
+      <div class="text-center" style="margin-bottom:40px">
+        <h2 style="font-size:32px;font-weight:700;margin-bottom:8px;letter-spacing:-0.02em">Carbon Footprint Calculator</h2>
+        <p style="color:var(--text-muted);font-size:15px">Free. Accurate. Powered by industry-standard emission factors.</p>
+      </div>
+
+      <div class="tabs">
+        <button class="tab tab-active" id="tab-flight" onclick="setCalcType('flight')">✈ Flight</button>
+        <button class="tab tab-inactive" id="tab-event" onclick="setCalcType('event')">🎤 Event</button>
+        <button class="tab tab-inactive" id="tab-business" onclick="setCalcType('business')">🏢 Business</button>
+      </div>
+
+      <div class="card">
+        <!-- FLIGHT FORM -->
+        <div id="form-flight" class="grid-row">
+          <div>
+            <label class="label">Popular Route</label>
+            <select id="sel-route" class="input select" onchange="document.getElementById('inp-distance').value=''">
+              <option value="">— Select a route or enter custom distance —</option>
+              <option value="5570">New York (JFK) → London (LHR) (5,570 km)</option>
+              <option value="8280">San Francisco (SFO) → Tokyo (NRT) (8,280 km)</option>
+              <option value="12850">Houston (IAH) → Dubai (DXB) (12,850 km)</option>
+              <option value="7100">Chicago (ORD) → Frankfurt (FRA) (7,100 km)</option>
+              <option value="12100">Los Angeles (LAX) → Sydney (SYD) (12,100 km)</option>
+              <option value="11550">Washington (IAD) → Abu Dhabi (AUH) (11,550 km)</option>
+              <option value="14950">Dallas (DFW) → Singapore (SIN) (14,950 km)</option>
+              <option value="7700">New York (JFK) → São Paulo (GRU) (7,700 km)</option>
+              <option value="2600">Miami (MIA) → Bogotá (BOG) (2,600 km)</option>
+              <option value="10200">Houston (IAH) → Lagos (LOS) (10,200 km)</option>
+            </select>
+          </div>
+          <div>
+            <label class="label">Or Custom Distance (km)</label>
+            <input type="number" id="inp-distance" class="input" placeholder="e.g., 5500" oninput="document.getElementById('sel-route').value=''">
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px">
+            <div>
+              <label class="label">Passengers</label>
+              <input type="number" id="inp-pax" class="input" value="1" min="1">
+            </div>
+            <div>
+              <label class="label">Class</label>
+              <select id="sel-class" class="input select">
+                <option value="1">Economy</option>
+                <option value="2.5">Business</option>
+                <option value="4">First</option>
+              </select>
+            </div>
+            <div>
+              <label class="label">Trip Type</label>
+              <select id="sel-trip" class="input select">
+                <option value="2">Round Trip</option>
+                <option value="1">One Way</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- EVENT FORM -->
+        <div id="form-event" class="grid-row hidden">
+          <div class="grid-2">
+            <div>
+              <label class="label">Number of Attendees</label>
+              <input type="number" id="inp-attendees" class="input" value="100" min="1">
+            </div>
+            <div>
+              <label class="label">Event Duration (days)</label>
+              <input type="number" id="inp-eventdays" class="input" value="2" min="1">
+            </div>
+          </div>
+          <div class="grid-2">
+            <div>
+              <label class="label">Avg. Flight Distance per Attendee (km)</label>
+              <input type="number" id="inp-avgflight" class="input" value="3000">
+            </div>
+            <div>
+              <label class="label">Hotel Nights per Attendee</label>
+              <input type="number" id="inp-hotelnights" class="input" value="2" min="0">
+            </div>
+          </div>
+          <p style="font-size:13px;color:var(--text-dim)">Includes round-trip flights, accommodation, and venue operations.</p>
+        </div>
+
+        <!-- BUSINESS FORM -->
+        <div id="form-business" class="grid-row hidden">
+          <div class="tag tag-accent">Scope 1 &amp; 2 — Direct &amp; Energy</div>
+          <div class="grid-2">
+            <div>
+              <label class="label">Office Space (sq ft)</label>
+              <input type="number" id="inp-sqft" class="input" value="5000">
+            </div>
+            <div>
+              <label class="label">Region</label>
+              <select id="sel-region" class="input select">
+                <option value="0.000417">United States</option>
+                <option value="0.000276">Europe</option>
+                <option value="0.000555">Asia</option>
+              </select>
+            </div>
+            <div>
+              <label class="label">Monthly Electricity (kWh)</label>
+              <input type="number" id="inp-elec" class="input" value="10000">
+            </div>
+            <div>
+              <label class="label">Monthly Natural Gas (therms)</label>
+              <input type="number" id="inp-gas" class="input" value="500">
+            </div>
+          </div>
+          <div class="tag tag-accent" style="margin-top:8px">Scope 1 — Fleet &amp; Scope 3 — Travel</div>
+          <div class="grid-2">
+            <div>
+              <label class="label">Monthly Fleet Miles</label>
+              <input type="number" id="inp-fleet" class="input" value="10000">
+            </div>
+            <div>
+              <label class="label">Fleet Type</label>
+              <select id="sel-fleettype" class="input select">
+                <option value="0.21">Gasoline</option>
+                <option value="0.27">Diesel</option>
+                <option value="0.12">Hybrid</option>
+                <option value="0.05">Electric</option>
+              </select>
+            </div>
+            <div>
+              <label class="label">Business Flights / Year</label>
+              <input type="number" id="inp-bizflights" class="input" value="20">
+            </div>
+            <div>
+              <label class="label">Avg. Flight Distance (km)</label>
+              <input type="number" id="inp-bizflightdist" class="input" value="3500">
+            </div>
+          </div>
+        </div>
+
+        <button class="btn-primary btn-full" style="margin-top:28px;padding:16px 32px;font-size:16px" onclick="calculate()">Calculate Emissions</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ═══════════ RESULTS ═══════════ -->
+<div id="sec-results" class="hidden">
+  <section class="section">
+    <div class="container-sm">
+      <div class="text-center" style="margin-bottom:40px">
+        <div class="tag tag-accent" id="result-type-label" style="margin-bottom:8px">Flight — Emissions Result</div>
+      </div>
+
+      <div class="card result-big" style="margin-bottom:24px">
+        <div class="number" id="result-tonnes">0</div>
+        <div class="unit">tonnes CO₂e</div>
+      </div>
+
+      <div class="card" style="margin-bottom:24px">
+        <div class="tag" style="color:var(--text-muted);margin-bottom:16px">Breakdown</div>
+        <div id="result-breakdown"></div>
+      </div>
+
+      <div class="card offset-cta">
+        <div class="offset-inner">
+          <div>
+            <div class="tag tag-accent" style="margin-bottom:4px">Offset with CarbonKerma Tokens</div>
+            <div class="offset-price" id="result-cost">$0.00</div>
+            <div class="offset-detail">at $50/tonne • CCUS-backed • EPA MRV verified • Blockchain recorded</div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <button class="btn-primary">Buy CKT Credits →</button>
+            <button class="btn-outline btn-outline-sm" onclick="showSection('cfc')">Enterprise CFC Program</button>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:12px;margin-top:24px;justify-content:center;flex-wrap:wrap">
+        <button class="btn-outline btn-outline-sm" onclick="showSection('calculator')">← Recalculate</button>
+        <button class="btn-outline btn-outline-sm" onclick="shareResult()">Share on LinkedIn / X</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ═══════════ PRICING ═══════════ -->
+<div id="sec-pricing" class="hidden">
+  <section class="section">
+    <div class="container">
+      <div class="text-center" style="margin-bottom:48px">
+        <h2 style="font-size:32px;font-weight:700;letter-spacing:-0.02em;margin-bottom:8px">Simple, Transparent Pricing</h2>
+        <p style="color:var(--text-muted);font-size:15px">From free footprint checks to enterprise-grade decarbonization</p>
+      </div>
+      <div class="grid-3" style="max-width:960px;margin:0 auto">
+        <!-- Free -->
+        <div class="card">
+          <div class="tag" style="color:var(--text-dim);margin-bottom:16px">Free</div>
+          <div class="price-amount">$0</div>
+          <div style="font-size:13px;color:var(--text-muted);margin-bottom:24px">Forever free</div>
+          <div class="feature-row"><span class="feature-check">✓</span> Flight emissions calculator</div>
+          <div class="feature-row"><span class="feature-check">✓</span> Event emissions calculator</div>
+          <div class="feature-row"><span class="feature-check">✓</span> Business estimate (basic)</div>
+          <div class="feature-row"><span class="feature-check">✓</span> CKT offset pricing</div>
+          <div class="feature-row"><span class="feature-check">✓</span> Shareable results</div>
+          <button class="btn-outline btn-full" style="margin-top:24px" onclick="showSection('calculator')">Start Free</button>
+        </div>
+        <!-- Pro -->
+        <div class="card price-card" style="border:2px solid var(--accent)">
+          <div class="price-popular">POPULAR</div>
+          <div class="tag tag-accent" style="margin-bottom:16px">Pro</div>
+          <div style="display:flex;align-items:baseline;gap:4px;margin-bottom:4px">
+            <span class="price-amount">$79</span><span class="price-period">/month</span>
+          </div>
+          <div style="font-size:13px;color:var(--text-muted);margin-bottom:24px">$63/mo billed annually</div>
+          <div class="feature-row"><span class="feature-check">✓</span> Everything in Free</div>
+          <div class="feature-row"><span class="feature-check">✓</span> Full Scope 1, 2 &amp; 3 reports</div>
+          <div class="feature-row"><span class="feature-check">✓</span> Exportable PDF certificates</div>
+          <div class="feature-row"><span class="feature-check">✓</span> Emissions tracking dashboard</div>
+          <div class="feature-row"><span class="feature-check">✓</span> Monthly trend analytics</div>
+          <div class="feature-row"><span class="feature-check">✓</span> Priority CKT purchasing</div>
+          <div class="feature-row"><span class="feature-check">✓</span> API access (100 calls/mo)</div>
+          <button class="btn-primary btn-full" style="margin-top:24px" onclick="joinWaitlist('pricing')">Join Pro Waitlist</button>
+        </div>
+        <!-- CFC -->
+        <div class="card cfc-card cfc-bg">
+          <div class="tag tag-cfc" style="margin-bottom:16px">CFC Enterprise</div>
+          <div class="price-amount">Custom</div>
+          <div style="font-size:13px;color:var(--text-muted);margin-bottom:24px">Tailored to your scale</div>
+          <div class="feature-row"><span class="feature-check-cfc">✓</span> Everything in Pro</div>
+          <div class="feature-row"><span class="feature-check-cfc">✓</span> Carbon Forward Commitments</div>
+          <div class="feature-row"><span class="feature-check-cfc">✓</span> Finance new CCUS projects</div>
+          <div class="feature-row"><span class="feature-check-cfc">✓</span> Milestone-based purchasing</div>
+          <div class="feature-row"><span class="feature-check-cfc">✓</span> Dedicated account manager</div>
+          <div class="feature-row"><span class="feature-check-cfc">✓</span> White-label reporting</div>
+          <div class="feature-row"><span class="feature-check-cfc">✓</span> Unlimited API</div>
+          <div class="feature-row"><span class="feature-check-cfc">✓</span> Board-ready ESG reports</div>
+          <button class="btn-outline btn-cfc btn-full" style="margin-top:24px" onclick="showSection('cfc')">Talk to Us →</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ═══════════ CFC ENTERPRISE ═══════════ -->
+<div id="sec-cfc" class="hidden">
+  <section class="section">
+    <div class="container-md">
+      <div class="text-center" style="margin-bottom:48px">
+        <div class="tag tag-cfc" style="margin-bottom:12px">Enterprise Program</div>
+        <h2 style="font-size:36px;font-weight:700;letter-spacing:-0.02em;margin-bottom:12px">Carbon Forward Commitment</h2>
+        <p style="color:var(--text-muted);font-size:16px;max-width:600px;margin:0 auto">Don't just buy offsets. Finance the next generation of carbon capture infrastructure.</p>
+      </div>
+
+      <div class="card cfc-card" style="margin-bottom:32px">
+        <div class="tag tag-cfc" style="margin-bottom:24px">CFC Milestone Progression</div>
+        <div class="milestone-row">
+          <div class="milestone-num">01</div>
+          <div><div class="milestone-name">Reservation</div><div class="milestone-desc">Secure exclusive tonnage allocation on CarbonKerma platform</div></div>
+          <div class="milestone-trigger">Reservation Fee ($2-5/t)</div>
+        </div>
+        <div class="milestone-row">
+          <div class="milestone-num">02</div>
+          <div><div class="milestone-name">Definition</div><div class="milestone-desc">Pre-FEED / feasibility confirms capture rate and sink proximity</div></div>
+          <div class="milestone-trigger">Development Tranche</div>
+        </div>
+        <div class="milestone-row">
+          <div class="milestone-num">03</div>
+          <div><div class="milestone-name">Engineering</div><div class="milestone-desc">FEED study finalized with ±15% cost certainty</div></div>
+          <div class="milestone-trigger">Milestone Tranche</div>
+        </div>
+        <div class="milestone-row">
+          <div class="milestone-num">04</div>
+          <div><div class="milestone-name">Regulatory</div><div class="milestone-desc">EPA Class VI well permit — the 'Golden Milestone'</div></div>
+          <div class="milestone-trigger">Execution Tranche</div>
+        </div>
+        <div class="milestone-row">
+          <div class="milestone-num">05</div>
+          <div><div class="milestone-name">FID</div><div class="milestone-desc">Final Investment Decision — EPC contract signed</div></div>
+          <div class="milestone-trigger">Construction Tranche</div>
+        </div>
+        <div class="milestone-row" style="border:none">
+          <div class="milestone-num">06</div>
+          <div><div class="milestone-name">Verified</div><div class="milestone-desc">First injection &amp; EPA Subpart RR MRV — CKT issued</div></div>
+          <div class="milestone-trigger">Final Balance ($50/t total)</div>
+        </div>
+      </div>
+
+      <div class="grid-2" style="margin-bottom:32px">
+        <div class="card" style="padding:24px">
+          <h4 style="font-size:15px;font-weight:700;margin-bottom:8px;color:var(--cfc)">Walk the Talk</h4>
+          <p style="font-size:13px;color:var(--text-muted);line-height:1.7">Tell clients "We don't just advise on net zero — we finance carbon capture projects." Irresistible for Big Four and BCG positioning.</p>
+        </div>
+        <div class="card" style="padding:24px">
+          <h4 style="font-size:15px;font-weight:700;margin-bottom:8px;color:var(--cfc)">De-Risk Supply</h4>
+          <p style="font-size:13px;color:var(--text-muted);line-height:1.7">Lock in future CKT credits at known prices. As carbon prices rise, your forward commitment becomes increasingly valuable.</p>
+        </div>
+        <div class="card" style="padding:24px">
+          <h4 style="font-size:15px;font-weight:700;margin-bottom:8px;color:var(--cfc)">EPA-Grade Integrity</h4>
+          <p style="font-size:13px;color:var(--text-muted);line-height:1.7">Every CKT is backed by EPA-approved MRV plans and well injection readings. Blockchain immutability eliminates double counting.</p>
+        </div>
+        <div class="card" style="padding:24px">
+          <h4 style="font-size:15px;font-weight:700;margin-bottom:8px;color:var(--cfc)">Catalytic Capital</h4>
+          <p style="font-size:13px;color:var(--text-muted);line-height:1.7">Your forward payments act as the catalytic capital that de-risks CCUS projects toward 45Q eligibility and full operation.</p>
+        </div>
+      </div>
+
+      <div class="card cfc-card text-center" style="background:var(--cfc-glow)" id="cfc-form">
+        <h3 style="font-size:20px;font-weight:700;margin-bottom:8px">Ready to Explore a CFC Partnership?</h3>
+        <p style="color:var(--text-muted);font-size:14px;margin-bottom:20px">Schedule a call with our enterprise team to discuss tailored CFC structures.</p>
+        <div style="display:flex;gap:8px;max-width:480px;margin:0 auto">
+          <input type="email" id="email-cfc" class="input" placeholder="Your work email" style="flex:1">
+          <button class="btn-primary" style="background:var(--cfc);white-space:nowrap" onclick="submitCFC()">Request CFC Briefing</button>
+        </div>
+      </div>
+      <div class="card cfc-card text-center hidden" style="background:var(--cfc-glow)" id="cfc-success">
+        <span style="font-size:28px">✓</span>
+        <h3 style="font-size:20px;font-weight:700;margin-top:8px">Thank you. Our team will reach out within 24 hours.</h3>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <p>© 2026 DigiKerma, Inc. — CarbonKerma™ Platform</p>
+  <p class="sub">Patent Pending UCT Technology • Blockchain Verified • CCUS-Backed Credits</p>
+</footer>
+
+<script>
+// ─── STATE ───
+let currentSection = 'landing';
+let currentCalcType = 'flight';
+let lastResult = null;
+
+const CKT_PRICE = 50;
+
+// ─── NAVIGATION ───
+function showSection(name) {
+  ['landing','calculator','results','pricing','cfc'].forEach(s => {
+    document.getElementById('sec-' + s).classList.toggle('hidden', s !== name);
+  });
+  currentSection = name;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ─── CALC TYPE TABS ───
+function setCalcType(type) {
+  currentCalcType = type;
+  ['flight','event','business'].forEach(t => {
+    document.getElementById('form-' + t).classList.toggle('hidden', t !== type);
+    document.getElementById('tab-' + t).className = 'tab ' + (t === type ? 'tab-active' : 'tab-inactive');
+  });
+}
+
+// ─── EMISSION FACTORS ───
+function getFlightFactor(d) {
+  if (d < 1500) return 0.255;
+  if (d < 4000) return 0.156;
+  return 0.150;
+}
+
+// ─── CALCULATE ───
+function calculate() {
+  let tonnes = 0, type = '', breakdown = [];
+
+  if (currentCalcType === 'flight') {
+    const routeVal = document.getElementById('sel-route').value;
+    const customVal = document.getElementById('inp-distance').value;
+    const dist = routeVal ? parseFloat(routeVal) : (parseFloat(customVal) || 0);
+    const pax = Math.max(1, parseInt(document.getElementById('inp-pax').value) || 1);
+    const classMult = parseFloat(document.getElementById('sel-class').value);
+    const tripMult = parseFloat(document.getElementById('sel-trip').value);
+    const factor = getFlightFactor(dist);
+    const totalKm = dist * tripMult * pax;
+    tonnes = (totalKm * factor * classMult) / 1000;
+    type = 'Flight';
+    const className = classMult === 1 ? 'Economy' : classMult === 2.5 ? 'Business' : 'First';
+    breakdown = [
+      { l: 'Distance', v: dist.toLocaleString() + ' km ' + (tripMult === 2 ? '(round trip)' : '(one way)') },
+      { l: 'Passengers', v: pax },
+      { l: 'Class', v: className },
+      { l: 'Total km traveled', v: totalKm.toLocaleString() },
+    ];
+  }
+  else if (currentCalcType === 'event') {
+    const att = Math.max(1, parseInt(document.getElementById('inp-attendees').value) || 100);
+    const days = Math.max(1, parseInt(document.getElementById('inp-eventdays').value) || 2);
+    const avgFlight = parseFloat(document.getElementById('inp-avgflight').value) || 3000;
+    const nights = parseFloat(document.getElementById('inp-hotelnights').value) || 2;
+    const flightE = (att * avgFlight * 2 * getFlightFactor(avgFlight)) / 1000;
+    const hotelE = (att * nights * 21.6) / 1000;
+    const venueE = att * days * 0.25;
+    tonnes = flightE + hotelE + venueE;
+    type = 'Event / Conference';
+    breakdown = [
+      { l: 'Attendees', v: att },
+      { l: 'Duration', v: days + ' days' },
+      { l: 'Flight emissions', v: flightE.toFixed(1) + ' tonnes' },
+      { l: 'Hotel emissions', v: hotelE.toFixed(1) + ' tonnes' },
+      { l: 'Venue emissions', v: venueE.toFixed(1) + ' tonnes' },
+    ];
+  }
+  else {
+    const sqft = parseFloat(document.getElementById('inp-sqft').value) || 5000;
+    const elecFactor = parseFloat(document.getElementById('sel-region').value);
+    const elec = parseFloat(document.getElementById('inp-elec').value) || 10000;
+    const gas = parseFloat(document.getElementById('inp-gas').value) || 500;
+    const fleet = parseFloat(document.getElementById('inp-fleet').value) || 10000;
+    const fleetFactor = parseFloat(document.getElementById('sel-fleettype').value);
+    const bizFlights = parseFloat(document.getElementById('inp-bizflights').value) || 20;
+    const bizDist = parseFloat(document.getElementById('inp-bizflightdist').value) || 3500;
+
+    const elecT = elec * 12 * elecFactor;
+    const gasT = gas * 12 * 0.00533;
+    const officeT = sqft * 0.0088;
+    const fleetT = (fleet * 12 * fleetFactor) / 1000;
+    const travelT = (bizFlights * bizDist * 2 * getFlightFactor(bizDist)) / 1000;
+    tonnes = elecT + gasT + officeT + fleetT + travelT;
+    type = 'Business (Annual)';
+    breakdown = [
+      { l: 'Scope 1 — Natural gas', v: gasT.toFixed(1) + ' t' },
+      { l: 'Scope 1 — Fleet vehicles', v: fleetT.toFixed(1) + ' t' },
+      { l: 'Scope 2 — Electricity', v: elecT.toFixed(1) + ' t' },
+      { l: 'Scope 2 — Office operations', v: officeT.toFixed(1) + ' t' },
+      { l: 'Scope 3 — Business travel', v: travelT.toFixed(1) + ' t' },
+    ];
+  }
+
+  lastResult = { tonnes, type, breakdown };
+
+  // Render results
+  document.getElementById('result-type-label').textContent = type + ' — Emissions Result';
+  document.getElementById('result-cost').textContent = '$' + (tonnes * CKT_PRICE).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+  // Animated counter
+  const numEl = document.getElementById('result-tonnes');
+  const decimals = tonnes < 10 ? 2 : 1;
+  let start = 0;
+  const duration = 800;
+  const startTime = performance.now();
+  function animateNum(now) {
+    const progress = Math.min((now - startTime) / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    numEl.textContent = (start + (tonnes - start) * eased).toFixed(decimals);
+    if (progress < 1) requestAnimationFrame(animateNum);
+  }
+  requestAnimationFrame(animateNum);
+
+  // Breakdown
+  const bdEl = document.getElementById('result-breakdown');
+  bdEl.innerHTML = breakdown.map((b, i) =>
+    '<div class="breakdown-row' + (i < breakdown.length - 1 ? '"' : '" style="border:none"') + '>' +
+    '<span class="breakdown-label">' + b.l + '</span>' +
+    '<span class="breakdown-value">' + b.v + '</span></div>'
+  ).join('');
+
+  showSection('results');
+}
+
+// ─── SHARE ───
+function shareResult() {
+  if (!lastResult) return;
+  const cost = (lastResult.tonnes * CKT_PRICE).toFixed(2);
+  const text = 'I just calculated my ' + lastResult.type.toLowerCase() + ' carbon footprint: ' +
+    lastResult.tonnes.toFixed(1) + ' tonnes CO₂e. The cost to offset with CCUS-backed, EPA-verified CarbonKerma Tokens? Just $' +
+    cost + '. No greenwashing — real, permanent carbon capture. Try it → kerma.ai\n\n#CarbonKerma #NetZero #CCUS #CarbonOffset';
+
+  if (navigator.share) {
+    navigator.share({ text: text });
+  } else if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(() => alert('Copied to clipboard! Paste on LinkedIn or X.'));
+  } else {
+    prompt('Copy this text:', text);
+  }
+}
+
+// ─── WAITLIST ───
+function joinWaitlist(source) {
+  const emailEl = document.getElementById('email-hero');
+  if (source === 'hero' && emailEl && emailEl.value) {
+    document.getElementById('waitlist-hero').classList.add('hidden');
+    document.getElementById('waitlist-hero-success').classList.remove('hidden');
+  }
+  if (source === 'pricing') {
+    alert('✓ You\'re on the Pro waitlist! We\'ll reach out soon.');
+  }
+}
+
+function submitCFC() {
+  const email = document.getElementById('email-cfc').value;
+  if (email) {
+    document.getElementById('cfc-form').classList.add('hidden');
+    document.getElementById('cfc-success').classList.remove('hidden');
+  }
+}
+</script>
+</body>
+</html>
