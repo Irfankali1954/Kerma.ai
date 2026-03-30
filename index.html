@@ -171,7 +171,7 @@ input:focus, select:focus { border-color: var(--accent) !important; outline: non
     </div>
     <div class="nav-btns">
       <button class="btn-outline btn-outline-sm" onclick="showSection('calculator')">Calculate</button>
-      <a href="https://dashboard.carbonkerma.com/" target="_blank" class="btn-outline btn-outline-sm" style="text-decoration:none;text-align:center">Buy / Trade</a>
+      <a href="#" onclick="showSection('offset');return false" class="btn-outline btn-outline-sm" style="text-decoration:none;text-align:center">Buy / Trade</a>
       <button class="btn-primary btn-primary-sm" onclick="showSection('pricing')">Get Pro</button>
     </div>
   </div>
@@ -187,7 +187,7 @@ input:focus, select:focus { border-color: var(--accent) !important; outline: non
       <p>Kerma AI calculates your emissions with precision — then connects you to CCUS-backed carbon credits that are <strong>measured, verified, and permanent</strong>. No greenwashing. No tree-planting promises. EPA-protocol backed permanence.</p>
       <div class="hero-btns">
         <button class="btn-primary" onclick="showSection('calculator')">Calculate Your Footprint — Free</button>
-        <a href="https://dashboard.carbonkerma.com/" target="_blank" class="btn-outline" style="text-decoration:none;text-align:center">Buy CKT Credits</a>
+        <a href="#" onclick="showSection('offset');return false" class="btn-outline" style="text-decoration:none;text-align:center">Buy CKT Credits</a>
         <button class="btn-outline" onclick="showSection('cfc')">Enterprise CFC →</button>
       </div>
       <div style="display:flex;gap:24px;justify-content:center;margin-top:16px">
@@ -725,8 +725,8 @@ input:focus, select:focus { border-color: var(--accent) !important; outline: non
             <div class="offset-detail">at $50/tonne • CCUS-backed • EPA MRV verified • Blockchain recorded</div>
           </div>
           <div style="display:flex;flex-direction:column;gap:8px">
-            <a href="https://dashboard.carbonkerma.com/" target="_blank" class="btn-primary" style="text-decoration:none;text-align:center;display:block">Buy CKT Credits →</a>
-            <a href="https://dashboard.carbonkerma.com/" target="_blank" class="btn-outline btn-outline-sm" style="text-decoration:none;text-align:center;display:block">Trade on KermaExchange</a>
+            <a href="#" onclick="showSection('offset');return false" class="btn-primary" style="text-decoration:none;text-align:center;display:block">Buy CKT Credits →</a>
+            <a href="#" onclick="showSection('offset');return false" class="btn-outline btn-outline-sm" style="text-decoration:none;text-align:center;display:block">Trade on KermaExchange</a>
             <button class="btn-outline btn-outline-sm" onclick="showSection('cfc')">Enterprise CFC Program</button>
           </div>
         </div>
@@ -762,7 +762,7 @@ input:focus, select:focus { border-color: var(--accent) !important; outline: non
           <div class="feature-row"><span class="feature-check">✓</span> CKT offset pricing</div>
           <div class="feature-row"><span class="feature-check">✓</span> Shareable results</div>
           <button class="btn-outline btn-full" style="margin-top:24px" onclick="showSection('calculator')">Start Free</button>
-          <a href="https://dashboard.carbonkerma.com/" target="_blank" class="btn-outline btn-full" style="margin-top:8px;text-decoration:none;text-align:center;display:block;font-size:13px">Buy / Trade CKT →</a>
+          <a href="#" onclick="showSection('offset');return false" class="btn-outline btn-full" style="margin-top:8px;text-decoration:none;text-align:center;display:block;font-size:13px">Buy / Trade CKT →</a>
         </div>
         <!-- Pro -->
         <div class="card price-card" style="border:2px solid var(--accent)">
@@ -890,6 +890,85 @@ input:focus, select:focus { border-color: var(--accent) !important; outline: non
   </section>
 </div>
 
+<!-- ═══════════ HOW TO OFFSET ═══════════ -->
+<div id="sec-offset" class="hidden">
+  <section class="section">
+    <div class="container-md">
+      <div class="text-center" style="margin-bottom:48px">
+        <div class="tag tag-accent" style="margin-bottom:12px">Getting Started</div>
+        <h2 style="font-size:36px;font-weight:700;letter-spacing:-0.02em;margin-bottom:12px">How to Offset with CarbonKerma</h2>
+        <p style="color:var(--text-muted);font-size:16px;max-width:600px;margin:0 auto">Purchase and retire CKT credits in four simple steps. As a regulated platform, we require identity verification to ensure the integrity of every transaction.</p>
+      </div>
+
+      <div style="display:grid;gap:24px;max-width:680px;margin:0 auto">
+        <!-- Step 1 -->
+        <div class="card" style="display:grid;grid-template-columns:56px 1fr;gap:20px;align-items:start">
+          <div style="width:48px;height:48px;border-radius:50%;background:var(--accent-glow);border:2px solid var(--accent);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;color:var(--accent)">1</div>
+          <div>
+            <h3 style="font-size:18px;font-weight:700;margin-bottom:6px">Create Your CarbonKerma Account</h3>
+            <p style="font-size:14px;color:var(--text-muted);line-height:1.7">Visit <a href="https://dashboard.carbonkerma.com/" target="_blank" style="color:var(--accent)">dashboard.carbonkerma.com</a> and sign up. You can use the platform on both desktop and mobile — no app download required.</p>
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="card" style="display:grid;grid-template-columns:56px 1fr;gap:20px;align-items:start">
+          <div style="width:48px;height:48px;border-radius:50%;background:var(--accent-glow);border:2px solid var(--accent);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;color:var(--accent)">2</div>
+          <div>
+            <h3 style="font-size:18px;font-weight:700;margin-bottom:6px">Complete KYC / KYB Verification</h3>
+            <p style="font-size:14px;color:var(--text-muted);line-height:1.7">To comply with Anti-Money Laundering (AML) regulations and ensure the integrity of our carbon credit marketplace, all users must complete identity verification through our secure Argos KYC/KYB process. This is a one-time step that protects both you and the platform.</p>
+            <div style="margin-top:12px;padding:12px 16px;background:var(--bg);border:1px solid var(--border);border-radius:8px">
+              <div style="font-size:12px;font-weight:700;color:var(--accent);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:6px">What You'll Need</div>
+              <div style="font-size:13px;color:var(--text-muted);line-height:1.8">
+                <strong style="color:var(--text)">Individuals (KYC):</strong> Government-issued photo ID (passport, driver's license, or national ID)<br>
+                <strong style="color:var(--text)">Businesses (KYB):</strong> Company registration documents, authorized representative ID, and proof of business address
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="card" style="display:grid;grid-template-columns:56px 1fr;gap:20px;align-items:start">
+          <div style="width:48px;height:48px;border-radius:50%;background:var(--accent-glow);border:2px solid var(--accent);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;color:var(--accent)">3</div>
+          <div>
+            <h3 style="font-size:18px;font-weight:700;margin-bottom:6px">Buy CKT Credits on the KermaExchange</h3>
+            <p style="font-size:14px;color:var(--text-muted);line-height:1.7">Once verified, browse available CarbonKerma Tokens (CKT) on our KermaExchange marketplace. Each CKT represents exactly one tonne of CO₂ that has been physically captured and permanently stored underground through CCUS, verified under EPA-approved MRV protocols.</p>
+            <div style="margin-top:12px;padding:12px 16px;background:var(--bg);border:1px solid var(--border);border-radius:8px">
+              <div style="font-size:12px;font-weight:700;color:var(--accent);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:6px">Your Purchase is Protected By</div>
+              <div style="font-size:13px;color:var(--text-muted);line-height:1.8">
+                <span style="color:var(--accent)">✓</span> Blockchain immutability — every transaction is permanently recorded<br>
+                <span style="color:var(--accent)">✓</span> KermaExchange Guarantee — credits replaced 1-for-1 if integrity is ever questioned<br>
+                <span style="color:var(--accent)">✓</span> Patent-pending Unique Carbon Tag (UCT) traceability
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="card" style="display:grid;grid-template-columns:56px 1fr;gap:20px;align-items:start">
+          <div style="width:48px;height:48px;border-radius:50%;background:var(--accent-glow);border:2px solid var(--accent);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;color:var(--accent)">4</div>
+          <div>
+            <h3 style="font-size:18px;font-weight:700;margin-bottom:6px">Retire CKT & Receive Your Offset Certificate</h3>
+            <p style="font-size:14px;color:var(--text-muted);line-height:1.7">When you're ready to claim your offset, "burn" (retire) your CKT tokens. This permanently removes the tonnage from circulation on the blockchain — it can never be resold or double-counted. You'll receive an auditable Offset Certificate and a Unique Carbon Tag (UCT) proving the provenance of your offset.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <div style="text-align:center;margin-top:40px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+        <a href="https://dashboard.carbonkerma.com/" target="_blank" class="btn-primary" style="text-decoration:none;display:inline-block">Create Account & Start Offsetting →</a>
+        <button class="btn-outline" onclick="showSection('calculator')">Calculate Your Footprint First</button>
+      </div>
+
+      <!-- Enterprise note -->
+      <div class="card cfc-card" style="margin-top:40px;text-align:center;background:var(--cfc-glow)">
+        <h4 style="font-size:16px;font-weight:700;color:var(--cfc);margin-bottom:8px">Enterprise & Large Volume?</h4>
+        <p style="font-size:14px;color:var(--text-muted);margin-bottom:16px">For purchases over 1,000 tonnes or forward commitments, our Carbon Forward Commitment (CFC) program offers milestone-based purchasing, dedicated account management, and white-label reporting.</p>
+        <button class="btn-outline btn-cfc" onclick="showSection('cfc')">Learn About CFC Enterprise →</button>
+      </div>
+    </div>
+  </section>
+</div>
+
 <!-- FOOTER -->
 <footer class="footer">
   <div style="display:flex;gap:24px;justify-content:center;margin-bottom:16px;flex-wrap:wrap">
@@ -912,7 +991,7 @@ const CKT_PRICE = 50;
 
 // ─── NAVIGATION ───
 function showSection(name) {
-  ['landing','calculator','results','pricing','cfc'].forEach(s => {
+  ['landing','calculator','results','pricing','cfc','offset'].forEach(s => {
     document.getElementById('sec-' + s).classList.toggle('hidden', s !== name);
   });
   currentSection = name;
