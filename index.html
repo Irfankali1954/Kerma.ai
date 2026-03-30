@@ -15,24 +15,24 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #0a0f0d;
-  --card: #111916;
-  --border: #1e2e25;
-  --accent: #22c55e;
-  --accent-dim: #16a34a;
-  --accent-glow: rgba(34,197,94,0.15);
-  --text: #e8ede9;
-  --text-muted: #8a9b8f;
-  --text-dim: #5a6b5f;
-  --cfc: #0ea5e9;
-  --cfc-glow: rgba(14,165,233,0.15);
+  --bg: #0b1210;
+  --card: #121d18;
+  --border: #1c3028;
+  --accent: #84cc16;
+  --accent-dim: #65a30d;
+  --accent-glow: rgba(132,204,22,0.12);
+  --text: #ecf0e8;
+  --text-muted: #94a89a;
+  --text-dim: #5e7365;
+  --cfc: #38bdf8;
+  --cfc-glow: rgba(56,189,248,0.12);
   --mono: 'JetBrains Mono', 'SF Mono', monospace;
   --sans: 'DM Sans', system-ui, sans-serif;
 }
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-::selection { background: rgba(34,197,94,0.3); }
-html { scroll-behavior: smooth; }
-body { font-family: var(--sans); background: var(--bg); color: var(--text); line-height: 1.6; min-height: 100vh; }
+::selection { background: rgba(132,204,22,0.3); }
+html { scroll-behavior: smooth; background: #0b1210; }
+body { font-family: var(--sans); background: var(--bg); color: var(--text); line-height: 1.6; min-height: 100vh; background-color: #0b1210; }
 a { color: var(--accent); text-decoration: none; }
 input, select, button { font-family: var(--sans); }
 input:focus, select:focus { border-color: var(--accent) !important; outline: none; }
@@ -170,7 +170,8 @@ input:focus, select:focus { border-color: var(--accent) !important; outline: non
       <span class="nav-badge">by CarbonKerma</span>
     </div>
     <div class="nav-btns">
-      <button class="btn-outline btn-outline-sm" onclick="showSection('calculator')">Calculate Now</button>
+      <button class="btn-outline btn-outline-sm" onclick="showSection('calculator')">Calculate</button>
+      <a href="https://dashboard.carbonkerma.com/" target="_blank" class="btn-outline btn-outline-sm" style="text-decoration:none;text-align:center">Buy / Trade</a>
       <button class="btn-primary btn-primary-sm" onclick="showSection('pricing')">Get Pro</button>
     </div>
   </div>
@@ -186,19 +187,23 @@ input:focus, select:focus { border-color: var(--accent) !important; outline: non
       <p>Kerma AI calculates your emissions with precision — then connects you to CCUS-backed carbon credits that are <strong>measured, verified, and permanent</strong>. No greenwashing. No tree-planting promises. EPA-protocol backed permanence.</p>
       <div class="hero-btns">
         <button class="btn-primary" onclick="showSection('calculator')">Calculate Your Footprint — Free</button>
-        <button class="btn-outline" onclick="showSection('cfc')">Enterprise CFC Program →</button>
+        <a href="https://dashboard.carbonkerma.com/" target="_blank" class="btn-outline" style="text-decoration:none;text-align:center">Buy CKT Credits</a>
+        <button class="btn-outline" onclick="showSection('cfc')">Enterprise CFC →</button>
+      </div>
+      <div style="display:flex;gap:24px;justify-content:center;margin-top:16px">
+        <a href="https://dashboard.carbonkerma.com/" target="_blank" style="font-size:13px;color:var(--accent);text-decoration:none;font-weight:600">Trade on KermaExchange →</a>
+        <a href="https://carbonkerma.com" target="_blank" style="font-size:13px;color:var(--text-muted);text-decoration:none;font-weight:600">Visit CarbonKerma.com →</a>
       </div>
       <div class="waitlist" id="waitlist-hero">
-        <div class="waitlist-row">
-          <input type="email" id="email-hero" class="input" placeholder="Enter your email for Pro early access" style="flex:1">
-          <button class="btn-primary" onclick="joinWaitlist('hero')" style="white-space:nowrap">Join Waitlist</button>
-        </div>
-      </div>
-      <div class="waitlist hidden" id="waitlist-hero-success">
-        <div class="waitlist-success">
-          <span style="font-size:20px;margin-right:8px">✓</span>
-          <span style="font-weight:600">You're on the Pro waitlist. We'll be in touch.</span>
-        </div>
+        <form action="https://formsubmit.co/info@digikerma.com" method="POST" style="display:flex;gap:8px">
+          <input type="hidden" name="_subject" value="New Kerma AI Pro Waitlist Signup!">
+          <input type="hidden" name="_captcha" value="false">
+          <input type="hidden" name="_next" value="https://kerma-ai.netlify.app/?joined=true">
+          <input type="hidden" name="_autoresponse" value="Thank you for joining the Kerma AI Pro waitlist! You're among the first to access our CCUS-backed carbon footprint platform. Pro features include: Full Scope 1, 2 & 3 emissions reporting, exportable PDF certificates, emissions tracking dashboard, and priority CKT credit purchasing. We'll notify you the moment Pro goes live. In the meantime, try our free calculator at https://kerma-ai.netlify.app — Irfan K. Ali, Founder, CarbonKerma | DigiKerma, Inc.">
+          <input type="hidden" name="source" value="Homepage Hero">
+          <input type="email" name="email" class="input" placeholder="Enter your email for Pro early access" style="flex:1" required>
+          <button type="submit" class="btn-primary" style="white-space:nowrap">Join Waitlist</button>
+        </form>
       </div>
     </div>
   </section>
@@ -267,8 +272,10 @@ input:focus, select:focus { border-color: var(--accent) !important; outline: non
         <p style="color:var(--text-muted);font-size:15px">Free. Accurate. Powered by industry-standard emission factors.</p>
       </div>
 
-      <div class="tabs">
+      <div class="tabs" style="flex-wrap:wrap">
         <button class="tab tab-active" id="tab-flight" onclick="setCalcType('flight')">✈ Flight</button>
+        <button class="tab tab-inactive" id="tab-transport" onclick="setCalcType('transport')">🚛 Transport</button>
+        <button class="tab tab-inactive" id="tab-shipping" onclick="setCalcType('shipping')">🚢 Shipping</button>
         <button class="tab tab-inactive" id="tab-event" onclick="setCalcType('event')">🎤 Event</button>
         <button class="tab tab-inactive" id="tab-business" onclick="setCalcType('business')">🏢 Business</button>
       </div>
@@ -317,6 +324,297 @@ input:focus, select:focus { border-color: var(--accent) !important; outline: non
               </select>
             </div>
           </div>
+        </div>
+
+        <!-- TRANSPORT FORM -->
+        <div id="form-transport" class="grid-row hidden">
+          <div>
+            <label class="label">Calculate For</label>
+            <select id="sel-transport-type" class="input select" onchange="toggleTransportFields()">
+              <option value="personal">Personal Vehicle / Commute</option>
+              <option value="fleet">Company Fleet / Delivery</option>
+              <option value="freight">Freight & Logistics (FedEx, Amazon, LTL)</option>
+            </select>
+          </div>
+
+          <!-- Personal Vehicle Fields -->
+          <div id="transport-personal">
+            <div class="grid-2">
+              <div>
+                <label class="label">Daily Round-Trip Commute (miles)</label>
+                <input type="number" id="inp-commute-miles" class="input" value="30">
+              </div>
+              <div>
+                <label class="label">Days Per Week</label>
+                <input type="number" id="inp-commute-days" class="input" value="5" min="1" max="7">
+              </div>
+            </div>
+            <div class="grid-2" style="margin-top:16px">
+              <div>
+                <label class="label">Vehicle Type</label>
+                <select id="sel-vehicle-type" class="input select">
+                  <option value="0.404">Gasoline Car (avg)</option>
+                  <option value="0.352">Gasoline — Compact</option>
+                  <option value="0.464">Gasoline — SUV / Truck</option>
+                  <option value="0.454">Diesel Car</option>
+                  <option value="0.202">Hybrid</option>
+                  <option value="0.100">Plug-in Hybrid</option>
+                  <option value="0.047">Electric Vehicle (US avg grid)</option>
+                </select>
+              </div>
+              <div>
+                <label class="label">Calculate Over</label>
+                <select id="sel-commute-period" class="input select">
+                  <option value="52">Full Year (52 weeks)</option>
+                  <option value="26">6 Months</option>
+                  <option value="4">1 Month</option>
+                  <option value="1">1 Week</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Fleet Fields -->
+          <div id="transport-fleet" class="hidden">
+            <div class="grid-2">
+              <div>
+                <label class="label">Number of Vehicles</label>
+                <input type="number" id="inp-fleet-count" class="input" value="10" min="1">
+              </div>
+              <div>
+                <label class="label">Avg. Miles Per Vehicle Per Day</label>
+                <input type="number" id="inp-fleet-daily-miles" class="input" value="100">
+              </div>
+            </div>
+            <div class="grid-2" style="margin-top:16px">
+              <div>
+                <label class="label">Vehicle Type</label>
+                <select id="sel-fleet-vehicle" class="input select">
+                  <option value="0.404">Cars / Sedans (gasoline)</option>
+                  <option value="0.464">SUVs / Pickups</option>
+                  <option value="0.600">Cargo Vans (Sprinter, Transit)</option>
+                  <option value="0.880">Box Trucks / Straight Trucks</option>
+                  <option value="0.202">Hybrid Vehicles</option>
+                  <option value="0.047">Electric Vehicles</option>
+                </select>
+              </div>
+              <div>
+                <label class="label">Operating Days Per Year</label>
+                <input type="number" id="inp-fleet-opdays" class="input" value="260">
+              </div>
+            </div>
+          </div>
+
+          <!-- Freight Fields -->
+          <div id="transport-freight" class="hidden">
+            <div class="grid-2">
+              <div>
+                <label class="label">Shipment Type</label>
+                <select id="sel-freight-type" class="input select">
+                  <option value="0.162">LTL (Less Than Truckload)</option>
+                  <option value="0.105">FTL (Full Truckload)</option>
+                  <option value="0.090">Intermodal (Truck + Rail)</option>
+                  <option value="0.682">Last-Mile Delivery (Urban)</option>
+                  <option value="1.540">Same-Day / Express Delivery</option>
+                </select>
+              </div>
+              <div>
+                <label class="label">Total Shipment Weight (lbs)</label>
+                <input type="number" id="inp-freight-weight" class="input" value="10000">
+              </div>
+            </div>
+            <div class="grid-2" style="margin-top:16px">
+              <div>
+                <label class="label">Distance (miles)</label>
+                <input type="number" id="inp-freight-distance" class="input" value="500">
+              </div>
+              <div>
+                <label class="label">Shipments Per Year</label>
+                <input type="number" id="inp-freight-shipments" class="input" value="100">
+              </div>
+            </div>
+            <p style="font-size:13px;color:var(--text-dim);margin-top:8px">Emission factors in kg CO₂ per ton-mile. Covers Amazon, FedEx, UPS, USPS, and LTL carriers.</p>
+          </div>
+        </div>
+
+        <!-- SHIPPING / MARITIME FORM -->
+        <div id="form-shipping" class="grid-row hidden">
+          <div>
+            <label class="label">Shipping Type</label>
+            <select id="sel-shipping-type" class="input select" onchange="toggleShippingFields()">
+              <option value="bulk">Bulk Cargo (Coal, Grain, Iron Ore)</option>
+              <option value="container">Container Shipping</option>
+              <option value="tanker">Tanker (LNG, Crude Oil, LPG)</option>
+              <option value="roro">RoRo / Vehicle Carrier</option>
+            </select>
+          </div>
+
+          <!-- Bulk Cargo -->
+          <div id="shipping-bulk">
+            <div class="grid-2">
+              <div>
+                <label class="label">Cargo Weight (tonnes)</label>
+                <input type="number" id="inp-bulk-weight" class="input" value="50000">
+              </div>
+              <div>
+                <label class="label">Vessel Size</label>
+                <select id="sel-bulk-vessel" class="input select">
+                  <option value="0.00476">Handysize (10,000-35,000 DWT)</option>
+                  <option value="0.00420">Handymax (35,000-60,000 DWT)</option>
+                  <option value="0.00344">Panamax (60,000-80,000 DWT)</option>
+                  <option value="0.00256">Capesize (100,000+ DWT)</option>
+                </select>
+              </div>
+            </div>
+            <div class="grid-2" style="margin-top:16px">
+              <div>
+                <label class="label">Popular Route</label>
+                <select id="sel-bulk-route" class="input select" onchange="document.getElementById('inp-bulk-distance').value=''">
+                  <option value="">— Select or enter custom —</option>
+                  <option value="17600">Richards Bay → Rotterdam (Coal, 17,600 km)</option>
+                  <option value="11200">Newcastle AU → Tokyo (Coal, 11,200 km)</option>
+                  <option value="18500">Gladstone → Hamburg (Coal, 18,500 km)</option>
+                  <option value="15400">Tubarao → Qingdao (Iron Ore, 15,400 km)</option>
+                  <option value="8900">Houston → Rotterdam (Grain, 8,900 km)</option>
+                  <option value="12800">Santos → Shanghai (Grain, 12,800 km)</option>
+                </select>
+              </div>
+              <div>
+                <label class="label">Or Custom Distance (km)</label>
+                <input type="number" id="inp-bulk-distance" class="input" placeholder="e.g., 15000" oninput="document.getElementById('sel-bulk-route').value=''">
+              </div>
+            </div>
+            <div class="grid-2" style="margin-top:16px">
+              <div>
+                <label class="label">Voyages Per Year</label>
+                <input type="number" id="inp-bulk-voyages" class="input" value="1" min="1">
+              </div>
+              <div>
+                <label class="label">Include Return Ballast?</label>
+                <select id="sel-bulk-ballast" class="input select">
+                  <option value="1.4">Yes (laden + ballast return)</option>
+                  <option value="1">No (one way only)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Container Shipping -->
+          <div id="shipping-container" class="hidden">
+            <div class="grid-2">
+              <div>
+                <label class="label">Number of TEU (containers)</label>
+                <input type="number" id="inp-container-teu" class="input" value="100" min="1">
+              </div>
+              <div>
+                <label class="label">Vessel Size</label>
+                <select id="sel-container-vessel" class="input select">
+                  <option value="0.0652">Feeder (1,000-3,000 TEU)</option>
+                  <option value="0.0432">Panamax (3,000-5,000 TEU)</option>
+                  <option value="0.0282">Post-Panamax (5,000-10,000 TEU)</option>
+                  <option value="0.0182">Ultra-Large (15,000+ TEU)</option>
+                </select>
+              </div>
+            </div>
+            <div class="grid-2" style="margin-top:16px">
+              <div>
+                <label class="label">Popular Route</label>
+                <select id="sel-container-route" class="input select" onchange="document.getElementById('inp-container-distance').value=''">
+                  <option value="">— Select or enter custom —</option>
+                  <option value="19300">Shanghai → Rotterdam (19,300 km)</option>
+                  <option value="21200">Shanghai → Los Angeles (21,200 km)</option>
+                  <option value="14500">Singapore → Rotterdam (14,500 km)</option>
+                  <option value="12500">Busan → Long Beach (12,500 km)</option>
+                  <option value="8800">Rotterdam → New York (8,800 km)</option>
+                  <option value="6200">Dubai → Mumbai (6,200 km)</option>
+                </select>
+              </div>
+              <div>
+                <label class="label">Or Custom Distance (km)</label>
+                <input type="number" id="inp-container-distance" class="input" placeholder="e.g., 15000" oninput="document.getElementById('sel-container-route').value=''">
+              </div>
+            </div>
+            <div style="margin-top:16px">
+              <label class="label">Shipments Per Year</label>
+              <input type="number" id="inp-container-shipments" class="input" value="1" min="1" style="max-width:200px">
+            </div>
+          </div>
+
+          <!-- Tanker -->
+          <div id="shipping-tanker" class="hidden">
+            <div class="grid-2">
+              <div>
+                <label class="label">Cargo Type</label>
+                <select id="sel-tanker-cargo" class="input select">
+                  <option value="0.00500">LNG (Liquefied Natural Gas)</option>
+                  <option value="0.00395">Crude Oil</option>
+                  <option value="0.00480">LPG (Liquefied Petroleum Gas)</option>
+                  <option value="0.00420">Clean Products (Gasoline, Diesel)</option>
+                </select>
+              </div>
+              <div>
+                <label class="label">Cargo Volume (tonnes)</label>
+                <input type="number" id="inp-tanker-weight" class="input" value="67500">
+              </div>
+            </div>
+            <div class="grid-2" style="margin-top:16px">
+              <div>
+                <label class="label">Popular Route</label>
+                <select id="sel-tanker-route" class="input select" onchange="document.getElementById('inp-tanker-distance').value=''">
+                  <option value="">— Select or enter custom —</option>
+                  <option value="17700">Cameron Parish → Tokyo (LNG, 17,700 km)</option>
+                  <option value="15500">Ras Laffan → Yokohama (LNG, 15,500 km)</option>
+                  <option value="12000">Sabine Pass → Rotterdam (LNG, 12,000 km)</option>
+                  <option value="18800">Ras Tanura → Houston (Crude, 18,800 km)</option>
+                  <option value="10200">Bonny → Rotterdam (Crude, 10,200 km)</option>
+                  <option value="5600">Novorossiysk → Augusta (Crude, 5,600 km)</option>
+                </select>
+              </div>
+              <div>
+                <label class="label">Or Custom Distance (km)</label>
+                <input type="number" id="inp-tanker-distance" class="input" placeholder="e.g., 15000" oninput="document.getElementById('sel-tanker-route').value=''">
+              </div>
+            </div>
+            <div class="grid-2" style="margin-top:16px">
+              <div>
+                <label class="label">Voyages Per Year</label>
+                <input type="number" id="inp-tanker-voyages" class="input" value="1" min="1">
+              </div>
+              <div>
+                <label class="label">Include Return Ballast?</label>
+                <select id="sel-tanker-ballast" class="input select">
+                  <option value="1.4">Yes (laden + ballast return)</option>
+                  <option value="1">No (one way only)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- RoRo -->
+          <div id="shipping-roro" class="hidden">
+            <div class="grid-2">
+              <div>
+                <label class="label">Number of Vehicles</label>
+                <input type="number" id="inp-roro-vehicles" class="input" value="500" min="1">
+              </div>
+              <div>
+                <label class="label">Avg. Vehicle Weight (tonnes)</label>
+                <input type="number" id="inp-roro-weight" class="input" value="1.8" step="0.1">
+              </div>
+            </div>
+            <div class="grid-2" style="margin-top:16px">
+              <div>
+                <label class="label">Distance (km)</label>
+                <input type="number" id="inp-roro-distance" class="input" value="10000">
+              </div>
+              <div>
+                <label class="label">Shipments Per Year</label>
+                <input type="number" id="inp-roro-shipments" class="input" value="1" min="1">
+              </div>
+            </div>
+          </div>
+
+          <p style="font-size:13px;color:var(--text-dim);margin-top:8px">Emission factors based on IMO Fourth GHG Study. Includes Well-to-Wake emissions for marine fuel.</p>
         </div>
 
         <!-- EVENT FORM -->
@@ -427,7 +725,8 @@ input:focus, select:focus { border-color: var(--accent) !important; outline: non
             <div class="offset-detail">at $50/tonne • CCUS-backed • EPA MRV verified • Blockchain recorded</div>
           </div>
           <div style="display:flex;flex-direction:column;gap:8px">
-            <button class="btn-primary">Buy CKT Credits →</button>
+            <a href="https://dashboard.carbonkerma.com/" target="_blank" class="btn-primary" style="text-decoration:none;text-align:center;display:block">Buy CKT Credits →</a>
+            <a href="https://dashboard.carbonkerma.com/" target="_blank" class="btn-outline btn-outline-sm" style="text-decoration:none;text-align:center;display:block">Trade on KermaExchange</a>
             <button class="btn-outline btn-outline-sm" onclick="showSection('cfc')">Enterprise CFC Program</button>
           </div>
         </div>
@@ -456,11 +755,14 @@ input:focus, select:focus { border-color: var(--accent) !important; outline: non
           <div class="price-amount">$0</div>
           <div style="font-size:13px;color:var(--text-muted);margin-bottom:24px">Forever free</div>
           <div class="feature-row"><span class="feature-check">✓</span> Flight emissions calculator</div>
+          <div class="feature-row"><span class="feature-check">✓</span> Road transport &amp; fleet calculator</div>
+          <div class="feature-row"><span class="feature-check">✓</span> Maritime shipping calculator</div>
           <div class="feature-row"><span class="feature-check">✓</span> Event emissions calculator</div>
           <div class="feature-row"><span class="feature-check">✓</span> Business estimate (basic)</div>
           <div class="feature-row"><span class="feature-check">✓</span> CKT offset pricing</div>
           <div class="feature-row"><span class="feature-check">✓</span> Shareable results</div>
           <button class="btn-outline btn-full" style="margin-top:24px" onclick="showSection('calculator')">Start Free</button>
+          <a href="https://dashboard.carbonkerma.com/" target="_blank" class="btn-outline btn-full" style="margin-top:8px;text-decoration:none;text-align:center;display:block;font-size:13px">Buy / Trade CKT →</a>
         </div>
         <!-- Pro -->
         <div class="card price-card" style="border:2px solid var(--accent)">
@@ -477,7 +779,15 @@ input:focus, select:focus { border-color: var(--accent) !important; outline: non
           <div class="feature-row"><span class="feature-check">✓</span> Monthly trend analytics</div>
           <div class="feature-row"><span class="feature-check">✓</span> Priority CKT purchasing</div>
           <div class="feature-row"><span class="feature-check">✓</span> API access (100 calls/mo)</div>
-          <button class="btn-primary btn-full" style="margin-top:24px" onclick="joinWaitlist('pricing')">Join Pro Waitlist</button>
+          <form action="https://formsubmit.co/info@digikerma.com" method="POST" style="margin-top:24px">
+            <input type="hidden" name="_subject" value="New Kerma AI Pro Waitlist Signup (Pricing Page)">
+            <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="_next" value="https://kerma-ai.netlify.app/?joined=true">
+            <input type="hidden" name="_autoresponse" value="Thank you for joining the Kerma AI Pro waitlist! You're among the first to access our CCUS-backed carbon footprint platform. Pro features include: Full Scope 1, 2 & 3 emissions reporting, exportable PDF certificates, emissions tracking dashboard, and priority CKT credit purchasing. We'll notify you the moment Pro goes live. In the meantime, try our free calculator at https://kerma-ai.netlify.app — Irfan K. Ali, Founder, CarbonKerma | DigiKerma, Inc.">
+            <input type="hidden" name="source" value="Pricing Page">
+            <input type="email" name="email" class="input" placeholder="Your email" style="margin-bottom:8px" required>
+            <button type="submit" class="btn-primary btn-full">Join Pro Waitlist</button>
+          </form>
         </div>
         <!-- CFC -->
         <div class="card cfc-card cfc-bg">
@@ -562,17 +872,19 @@ input:focus, select:focus { border-color: var(--accent) !important; outline: non
         </div>
       </div>
 
-      <div class="card cfc-card text-center" style="background:var(--cfc-glow)" id="cfc-form">
+      <div class="card cfc-card text-center" style="background:var(--cfc-glow)">
         <h3 style="font-size:20px;font-weight:700;margin-bottom:8px">Ready to Explore a CFC Partnership?</h3>
         <p style="color:var(--text-muted);font-size:14px;margin-bottom:20px">Schedule a call with our enterprise team to discuss tailored CFC structures.</p>
-        <div style="display:flex;gap:8px;max-width:480px;margin:0 auto">
-          <input type="email" id="email-cfc" class="input" placeholder="Your work email" style="flex:1">
-          <button class="btn-primary" style="background:var(--cfc);white-space:nowrap" onclick="submitCFC()">Request CFC Briefing</button>
-        </div>
-      </div>
-      <div class="card cfc-card text-center hidden" style="background:var(--cfc-glow)" id="cfc-success">
-        <span style="font-size:28px">✓</span>
-        <h3 style="font-size:20px;font-weight:700;margin-top:8px">Thank you. Our team will reach out within 24 hours.</h3>
+        <form action="https://formsubmit.co/info@digikerma.com" method="POST" style="display:flex;gap:8px;max-width:560px;margin:0 auto;flex-wrap:wrap">
+          <input type="hidden" name="_subject" value="🔵 CFC Enterprise Inquiry — Kerma AI">
+          <input type="hidden" name="_captcha" value="false">
+          <input type="hidden" name="_next" value="https://kerma-ai.netlify.app/?cfc=true">
+          <input type="hidden" name="_autoresponse" value="Thank you for your interest in CarbonKerma's Carbon Forward Commitment (CFC) program. Our enterprise team will reach out within 24 hours to schedule a briefing tailored to your organization. The CFC program enables forward-purchase of CKT credits tied to CCUS project milestones — meaning your offset investment directly finances new carbon capture infrastructure. We look forward to speaking with you. — Irfan K. Ali, Founder, CarbonKerma | DigiKerma, Inc.">
+          <input type="hidden" name="source" value="CFC Enterprise Page">
+          <input type="email" name="email" class="input" placeholder="Your work email" style="flex:1;min-width:180px" required>
+          <input type="text" name="company" class="input" placeholder="Company name" style="flex:1;min-width:180px">
+          <button type="submit" class="btn-primary" style="background:var(--cfc);white-space:nowrap;width:100%">Request CFC Briefing</button>
+        </form>
       </div>
     </div>
   </section>
@@ -580,8 +892,14 @@ input:focus, select:focus { border-color: var(--accent) !important; outline: non
 
 <!-- FOOTER -->
 <footer class="footer">
-  <p>© 2026 DigiKerma, Inc. — CarbonKerma™ Platform</p>
-  <p class="sub">Patent Pending UCT Technology • Blockchain Verified • CCUS-Backed Credits</p>
+  <div style="display:flex;gap:24px;justify-content:center;margin-bottom:16px;flex-wrap:wrap">
+    <a href="https://carbonkerma.com" target="_blank" style="font-size:13px;color:var(--accent);text-decoration:none;font-weight:600">CarbonKerma.com</a>
+    <a href="https://dashboard.carbonkerma.com/" target="_blank" style="font-size:13px;color:var(--accent);text-decoration:none;font-weight:600">Buy CKT Credits</a>
+    <a href="https://dashboard.carbonkerma.com/" target="_blank" style="font-size:13px;color:var(--accent);text-decoration:none;font-weight:600">KermaExchange</a>
+    <a href="https://carbonkerma.com/contact-us/" target="_blank" style="font-size:13px;color:var(--text-muted);text-decoration:none;font-weight:600">Contact Us</a>
+  </div>
+  <p>© 2026 DigiKerma, Inc. — CarbonKerma™ Platform | Herndon, VA</p>
+  <p class="sub">Patent Pending UCT Technology • Blockchain Verified • CCUS-Backed Credits • <a href="https://carbonkerma.com/about-digikerma/" target="_blank" style="color:var(--text-dim);text-decoration:none">About DigiKerma</a></p>
 </footer>
 
 <script>
@@ -604,10 +922,27 @@ function showSection(name) {
 // ─── CALC TYPE TABS ───
 function setCalcType(type) {
   currentCalcType = type;
-  ['flight','event','business'].forEach(t => {
+  ['flight','transport','shipping','event','business'].forEach(t => {
     document.getElementById('form-' + t).classList.toggle('hidden', t !== type);
     document.getElementById('tab-' + t).className = 'tab ' + (t === type ? 'tab-active' : 'tab-inactive');
   });
+}
+
+// ─── TRANSPORT FIELD TOGGLE ───
+function toggleTransportFields() {
+  const type = document.getElementById('sel-transport-type').value;
+  document.getElementById('transport-personal').classList.toggle('hidden', type !== 'personal');
+  document.getElementById('transport-fleet').classList.toggle('hidden', type !== 'fleet');
+  document.getElementById('transport-freight').classList.toggle('hidden', type !== 'freight');
+}
+
+// ─── SHIPPING FIELD TOGGLE ───
+function toggleShippingFields() {
+  const type = document.getElementById('sel-shipping-type').value;
+  document.getElementById('shipping-bulk').classList.toggle('hidden', type !== 'bulk');
+  document.getElementById('shipping-container').classList.toggle('hidden', type !== 'container');
+  document.getElementById('shipping-tanker').classList.toggle('hidden', type !== 'tanker');
+  document.getElementById('shipping-roro').classList.toggle('hidden', type !== 'roro');
 }
 
 // ─── EMISSION FACTORS ───
@@ -639,6 +974,142 @@ function calculate() {
       { l: 'Class', v: className },
       { l: 'Total km traveled', v: totalKm.toLocaleString() },
     ];
+  }
+  else if (currentCalcType === 'transport') {
+    const transportType = document.getElementById('sel-transport-type').value;
+
+    if (transportType === 'personal') {
+      const miles = parseFloat(document.getElementById('inp-commute-miles').value) || 30;
+      const daysPerWeek = parseFloat(document.getElementById('inp-commute-days').value) || 5;
+      const weeks = parseFloat(document.getElementById('sel-commute-period').value) || 52;
+      const factor = parseFloat(document.getElementById('sel-vehicle-type').value);
+      const totalMiles = miles * daysPerWeek * weeks;
+      const totalKm = totalMiles * 1.609;
+      tonnes = (totalKm * factor) / 1000;
+      const periodLabel = weeks === 52 ? 'Annual' : weeks === 26 ? '6-Month' : weeks === 4 ? 'Monthly' : 'Weekly';
+      type = 'Personal Vehicle (' + periodLabel + ')';
+      const vehicleName = document.getElementById('sel-vehicle-type').selectedOptions[0].text;
+      breakdown = [
+        { l: 'Daily round-trip', v: miles + ' miles' },
+        { l: 'Schedule', v: daysPerWeek + ' days/week × ' + weeks + ' weeks' },
+        { l: 'Vehicle', v: vehicleName },
+        { l: 'Total distance', v: totalMiles.toLocaleString() + ' miles (' + Math.round(totalKm).toLocaleString() + ' km)' },
+      ];
+    }
+    else if (transportType === 'fleet') {
+      const vehicles = parseFloat(document.getElementById('inp-fleet-count').value) || 10;
+      const dailyMiles = parseFloat(document.getElementById('inp-fleet-daily-miles').value) || 100;
+      const factor = parseFloat(document.getElementById('sel-fleet-vehicle').value);
+      const opDays = parseFloat(document.getElementById('inp-fleet-opdays').value) || 260;
+      const totalMiles = vehicles * dailyMiles * opDays;
+      const totalKm = totalMiles * 1.609;
+      tonnes = (totalKm * factor) / 1000;
+      type = 'Fleet / Delivery (Annual)';
+      const vehicleName = document.getElementById('sel-fleet-vehicle').selectedOptions[0].text;
+      breakdown = [
+        { l: 'Vehicles', v: vehicles },
+        { l: 'Daily miles per vehicle', v: dailyMiles.toLocaleString() },
+        { l: 'Operating days/year', v: opDays },
+        { l: 'Vehicle type', v: vehicleName },
+        { l: 'Total fleet miles', v: totalMiles.toLocaleString() },
+      ];
+    }
+    else {
+      const factor = parseFloat(document.getElementById('sel-freight-type').value);
+      const weightLbs = parseFloat(document.getElementById('inp-freight-weight').value) || 10000;
+      const distance = parseFloat(document.getElementById('inp-freight-distance').value) || 500;
+      const shipments = parseFloat(document.getElementById('inp-freight-shipments').value) || 100;
+      const weightTons = weightLbs / 2000;
+      const tonMilesPerShipment = weightTons * distance;
+      const totalTonMiles = tonMilesPerShipment * shipments;
+      tonnes = (totalTonMiles * factor) / 1000;
+      type = 'Freight & Logistics (Annual)';
+      const freightName = document.getElementById('sel-freight-type').selectedOptions[0].text;
+      breakdown = [
+        { l: 'Shipment type', v: freightName },
+        { l: 'Weight per shipment', v: weightLbs.toLocaleString() + ' lbs (' + weightTons.toFixed(1) + ' tons)' },
+        { l: 'Distance', v: distance.toLocaleString() + ' miles' },
+        { l: 'Annual shipments', v: shipments.toLocaleString() },
+        { l: 'Total ton-miles', v: totalTonMiles.toLocaleString() },
+      ];
+    }
+  }
+  else if (currentCalcType === 'shipping') {
+    const shippingType = document.getElementById('sel-shipping-type').value;
+
+    if (shippingType === 'bulk') {
+      const weight = parseFloat(document.getElementById('inp-bulk-weight').value) || 50000;
+      const factor = parseFloat(document.getElementById('sel-bulk-vessel').value);
+      const routeVal = document.getElementById('sel-bulk-route').value;
+      const customVal = document.getElementById('inp-bulk-distance').value;
+      const dist = routeVal ? parseFloat(routeVal) : (parseFloat(customVal) || 0);
+      const voyages = parseFloat(document.getElementById('inp-bulk-voyages').value) || 1;
+      const ballast = parseFloat(document.getElementById('sel-bulk-ballast').value);
+      const tonneKm = weight * dist * ballast * voyages;
+      tonnes = (tonneKm * factor) / 1000000;
+      type = 'Bulk Shipping' + (voyages > 1 ? ' (' + voyages + ' voyages)' : '');
+      breakdown = [
+        { l: 'Cargo weight', v: weight.toLocaleString() + ' tonnes' },
+        { l: 'Vessel class', v: document.getElementById('sel-bulk-vessel').selectedOptions[0].text },
+        { l: 'Distance', v: dist.toLocaleString() + ' km' },
+        { l: 'Ballast return', v: ballast === 1.4 ? 'Included' : 'Not included' },
+        { l: 'Annual voyages', v: voyages },
+      ];
+    }
+    else if (shippingType === 'container') {
+      const teu = parseFloat(document.getElementById('inp-container-teu').value) || 100;
+      const factor = parseFloat(document.getElementById('sel-container-vessel').value);
+      const routeVal = document.getElementById('sel-container-route').value;
+      const customVal = document.getElementById('inp-container-distance').value;
+      const dist = routeVal ? parseFloat(routeVal) : (parseFloat(customVal) || 0);
+      const shipments = parseFloat(document.getElementById('inp-container-shipments').value) || 1;
+      const weightPerTEU = 14;
+      const totalWeight = teu * weightPerTEU;
+      tonnes = (teu * dist * factor * shipments) / 1000;
+      type = 'Container Shipping' + (shipments > 1 ? ' (' + shipments + ' shipments/yr)' : '');
+      breakdown = [
+        { l: 'Containers (TEU)', v: teu },
+        { l: 'Est. cargo weight', v: totalWeight.toLocaleString() + ' tonnes' },
+        { l: 'Vessel class', v: document.getElementById('sel-container-vessel').selectedOptions[0].text },
+        { l: 'Distance', v: dist.toLocaleString() + ' km' },
+        { l: 'Annual shipments', v: shipments },
+      ];
+    }
+    else if (shippingType === 'tanker') {
+      const cargoWeight = parseFloat(document.getElementById('inp-tanker-weight').value) || 67500;
+      const factor = parseFloat(document.getElementById('sel-tanker-cargo').value);
+      const routeVal = document.getElementById('sel-tanker-route').value;
+      const customVal = document.getElementById('inp-tanker-distance').value;
+      const dist = routeVal ? parseFloat(routeVal) : (parseFloat(customVal) || 0);
+      const voyages = parseFloat(document.getElementById('inp-tanker-voyages').value) || 1;
+      const ballast = parseFloat(document.getElementById('sel-tanker-ballast').value);
+      const tonneKm = cargoWeight * dist * ballast * voyages;
+      tonnes = (tonneKm * factor) / 1000000;
+      type = 'Tanker Shipping' + (voyages > 1 ? ' (' + voyages + ' voyages/yr)' : '');
+      breakdown = [
+        { l: 'Cargo type', v: document.getElementById('sel-tanker-cargo').selectedOptions[0].text },
+        { l: 'Cargo volume', v: cargoWeight.toLocaleString() + ' tonnes' },
+        { l: 'Distance', v: dist.toLocaleString() + ' km' },
+        { l: 'Ballast return', v: ballast === 1.4 ? 'Included' : 'Not included' },
+        { l: 'Annual voyages', v: voyages },
+      ];
+    }
+    else {
+      const vehicles = parseFloat(document.getElementById('inp-roro-vehicles').value) || 500;
+      const avgWeight = parseFloat(document.getElementById('inp-roro-weight').value) || 1.8;
+      const dist = parseFloat(document.getElementById('inp-roro-distance').value) || 10000;
+      const shipments = parseFloat(document.getElementById('inp-roro-shipments').value) || 1;
+      const totalWeight = vehicles * avgWeight;
+      const factor = 0.0168;
+      tonnes = (totalWeight * dist * factor * shipments) / 1000;
+      type = 'RoRo / Vehicle Carrier' + (shipments > 1 ? ' (' + shipments + ' shipments/yr)' : '');
+      breakdown = [
+        { l: 'Vehicles shipped', v: vehicles },
+        { l: 'Total cargo weight', v: totalWeight.toLocaleString() + ' tonnes' },
+        { l: 'Distance', v: dist.toLocaleString() + ' km' },
+        { l: 'Annual shipments', v: shipments },
+      ];
+    }
   }
   else if (currentCalcType === 'event') {
     const att = Math.max(1, parseInt(document.getElementById('inp-attendees').value) || 100);
@@ -732,25 +1203,19 @@ function shareResult() {
   }
 }
 
-// ─── WAITLIST ───
-function joinWaitlist(source) {
-  const emailEl = document.getElementById('email-hero');
-  if (source === 'hero' && emailEl && emailEl.value) {
-    document.getElementById('waitlist-hero').classList.add('hidden');
-    document.getElementById('waitlist-hero-success').classList.remove('hidden');
+// ─── DETECT FORM SUBMISSION REDIRECT ───
+window.addEventListener('load', function() {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('joined') === 'true') {
+    showSection('landing');
+    const hero = document.getElementById('waitlist-hero');
+    if (hero) hero.innerHTML = '<div class="waitlist-success" style="padding:20px;text-align:center;border:1px solid var(--accent);background:var(--accent-glow);border-radius:16px"><span style="font-size:20px;margin-right:8px">✓</span><span style="font-weight:600">You\'re on the Pro waitlist! Check your email for confirmation.</span></div>';
   }
-  if (source === 'pricing') {
-    alert('✓ You\'re on the Pro waitlist! We\'ll reach out soon.');
+  if (params.get('cfc') === 'true') {
+    showSection('cfc');
+    alert('✓ Thank you! Our enterprise team will reach out within 24 hours.');
   }
-}
-
-function submitCFC() {
-  const email = document.getElementById('email-cfc').value;
-  if (email) {
-    document.getElementById('cfc-form').classList.add('hidden');
-    document.getElementById('cfc-success').classList.remove('hidden');
-  }
-}
+});
 </script>
 </body>
 </html>
